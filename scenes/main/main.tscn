@@ -1,18 +1,25 @@
-[gd_scene format=3 uid="uid://chuw0g4fy4hap"]
+[gd_scene load_steps=2 format=3 uid="uid://chuw0g4fy4hap"]
+
+[ext_resource type="Script" uid="uid://c0yktmsqgjnxu" path="res://scripts/managers/ui_container.gd" id="1_hyk8p"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="UI_Container" type="HSplitContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 276.0
+offset_bottom = 636.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hyk8p")
 
 [node name="LeftPanel" type="VBoxContainer" parent="UI_Container"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="ToolPalette" type="GridContainer" parent="UI_Container/LeftPanel"]
 layout_mode = 2
@@ -34,11 +41,14 @@ layout_mode = 2
 
 [node name="ColorPicker" type="ColorPicker" parent="UI_Container/LeftPanel"]
 layout_mode = 2
+picker_shape = 1
 
 [node name="CenterPanel" type="VSplitContainer" parent="UI_Container"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="MainCanvas" type="SubViewport" parent="UI_Container/CenterPanel"]
+size = Vector2i(1024, 768)
 
 [node name="CanvasCamera2D" type="Camera2D" parent="UI_Container/CenterPanel/MainCanvas"]
 
@@ -58,6 +68,7 @@ layout_mode = 2
 
 [node name="RightPanel" type="VBoxContainer" parent="UI_Container"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Navigator" type="SubViewport" parent="UI_Container/RightPanel"]
 
