@@ -34,54 +34,66 @@ func _on_window_resized():
 	setup_responsive_layout()
 
 func setup_panel_styling():
-	"""Apply beautiful StyleBox backgrounds and borders to our panels"""
+	"""Apply beautiful Panel backgrounds to our containers"""
 	
-	# Left Panel - Subtle blue/gray with elegant border
+	# Left Panel Background
 	if left_panel:
+		var left_bg_panel = Panel.new()
+		left_bg_panel.name = "LeftPanelBG"
+		left_bg_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE  # Don't block interactions
+		left_bg_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		
+		# Create and apply our beautiful style
 		var left_style = StyleBoxFlat.new()
 		left_style.bg_color = Color(0.2, 0.25, 0.3)  # Subtle blue/gray
-		left_style.border_width_left = 0
-		left_style.border_width_top = 0
 		left_style.border_width_right = 2
-		left_style.border_width_bottom = 0
-		left_style.border_color = Color(0.1, 0.1, 0.1, 0.5)  # Subtle dark border
-		left_style.corner_radius_top_left = 0
-		left_style.corner_radius_top_right = 0
-		left_style.corner_radius_bottom_left = 0
-		left_style.corner_radius_bottom_right = 0
+		left_style.border_color = Color(0.1, 0.1, 0.1, 0.5)
 		
-		left_panel.add_theme_stylebox_override("panel", left_style)
+		left_bg_panel.add_theme_stylebox_override("panel", left_style)
+		
+		# Add as first child (behind everything)
+		left_panel.add_child(left_bg_panel)
+		left_panel.move_child(left_bg_panel, 0)
 	
-	# Center Panel - Clean white canvas background
+	# Center Panel Background  
 	if center_panel:
-		var center_style = StyleBoxFlat.new()
-		center_style.bg_color = Color(1.0, 1.0, 1.0)  # Pure white for drawing
-		center_style.border_width_left = 2
-		center_style.border_width_top = 0
-		center_style.border_width_right = 2
-		center_style.border_width_bottom = 0
-		center_style.border_color = Color(0.1, 0.1, 0.1, 0.3)  # Very subtle borders
+		var center_bg_panel = Panel.new()
+		center_bg_panel.name = "CenterPanelBG"
+		center_bg_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		center_bg_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		
-		center_panel.add_theme_stylebox_override("panel", center_style)
+		var center_style = StyleBoxFlat.new()
+		center_style.bg_color = Color(1.0, 1.0, 1.0)  # Pure white
+		center_style.border_width_left = 2
+		center_style.border_width_right = 2
+		center_style.border_color = Color(0.1, 0.1, 0.1, 0.3)
+		
+		center_bg_panel.add_theme_stylebox_override("panel", center_style)
+		center_panel.add_child(center_bg_panel)
+		center_panel.move_child(center_bg_panel, 0)
 	
-	# Right Panel - Light gray with elegant border
+	# Right Panel Background
 	if right_panel:
+		var right_bg_panel = Panel.new()
+		right_bg_panel.name = "RightPanelBG"
+		right_bg_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		right_bg_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		
 		var right_style = StyleBoxFlat.new()
 		right_style.bg_color = Color(0.25, 0.25, 0.25)  # Light gray
 		right_style.border_width_left = 2
-		right_style.border_width_top = 0
-		right_style.border_width_right = 0
-		right_style.border_width_bottom = 0
-		right_style.border_color = Color(0.1, 0.1, 0.1, 0.5)  # Subtle dark border
+		right_style.border_color = Color(0.1, 0.1, 0.1, 0.5)
 		
-		right_panel.add_theme_stylebox_override("panel", right_style)
+		right_bg_panel.add_theme_stylebox_override("panel", right_style)
+		right_panel.add_child(right_bg_panel)
+		right_panel.move_child(right_bg_panel, 0)
 	
 	# MainCanvas background - Pure white drawing surface
 	if main_canvas:
 		setup_canvas_background()
 
 func setup_canvas_background():
-	"""Create a beautiful white drawing surface for our main canvas"""
+	#Create a beautiful white drawing surface for our main canvas
 	var canvas_bg = ColorRect.new()
 	canvas_bg.name = "CanvasBackground"
 	canvas_bg.color = Color(1.0, 1.0, 1.0)  # Pure white
