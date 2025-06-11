@@ -22,13 +22,77 @@ func _ready():
 	# Connect to window resize signal
 	get_viewport().size_changed.connect(_on_window_resized)
 	
+	# Setup our beautiful panel styling
+	call_deferred("setup_panel_styling")
+	
 	# Delay initial setup to ensure all nodes are ready
 	call_deferred("setup_responsive_layout")
 	
-	print("UI Container initialized! 🎉")
+	print("UI Container initialized with gorgeous styling! 🎉")
 
 func _on_window_resized():
 	setup_responsive_layout()
+
+func setup_panel_styling():
+	"""Apply beautiful StyleBox backgrounds and borders to our panels"""
+	
+	# Left Panel - Subtle blue/gray with elegant border
+	if left_panel:
+		var left_style = StyleBoxFlat.new()
+		left_style.bg_color = Color(0.2, 0.25, 0.3)  # Subtle blue/gray
+		left_style.border_width_left = 0
+		left_style.border_width_top = 0
+		left_style.border_width_right = 2
+		left_style.border_width_bottom = 0
+		left_style.border_color = Color(0.1, 0.1, 0.1, 0.5)  # Subtle dark border
+		left_style.corner_radius_top_left = 0
+		left_style.corner_radius_top_right = 0
+		left_style.corner_radius_bottom_left = 0
+		left_style.corner_radius_bottom_right = 0
+		
+		left_panel.add_theme_stylebox_override("panel", left_style)
+	
+	# Center Panel - Clean white canvas background
+	if center_panel:
+		var center_style = StyleBoxFlat.new()
+		center_style.bg_color = Color(1.0, 1.0, 1.0)  # Pure white for drawing
+		center_style.border_width_left = 2
+		center_style.border_width_top = 0
+		center_style.border_width_right = 2
+		center_style.border_width_bottom = 0
+		center_style.border_color = Color(0.1, 0.1, 0.1, 0.3)  # Very subtle borders
+		
+		center_panel.add_theme_stylebox_override("panel", center_style)
+	
+	# Right Panel - Light gray with elegant border
+	if right_panel:
+		var right_style = StyleBoxFlat.new()
+		right_style.bg_color = Color(0.25, 0.25, 0.25)  # Light gray
+		right_style.border_width_left = 2
+		right_style.border_width_top = 0
+		right_style.border_width_right = 0
+		right_style.border_width_bottom = 0
+		right_style.border_color = Color(0.1, 0.1, 0.1, 0.5)  # Subtle dark border
+		
+		right_panel.add_theme_stylebox_override("panel", right_style)
+	
+	# MainCanvas background - Pure white drawing surface
+	if main_canvas:
+		setup_canvas_background()
+
+func setup_canvas_background():
+	"""Create a beautiful white drawing surface for our main canvas"""
+	var canvas_bg = ColorRect.new()
+	canvas_bg.name = "CanvasBackground"
+	canvas_bg.color = Color(1.0, 1.0, 1.0)  # Pure white
+	canvas_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE  # Let drawing events pass through
+	
+	# Make it fill the entire canvas
+	canvas_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	
+	# Add as first child so it's behind everything else
+	main_canvas.add_child(canvas_bg)
+	main_canvas.move_child(canvas_bg, 0)
 
 func setup_responsive_layout():
 	var screen_size = get_viewport().get_visible_rect().size
