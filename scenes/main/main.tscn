@@ -42,9 +42,8 @@ layout_mode = 2
 [node name="OpacitySlider" type="HSlider" parent="UI_Container/LeftPanel/BrushSettings"]
 layout_mode = 2
 
-[node name="ColorPicker" type="ColorPicker" parent="UI_Container/LeftPanel"]
+[node name="ColorPicker" type="ColorPickerButton" parent="UI_Container/LeftPanel"]
 layout_mode = 2
-picker_shape = 1
 
 [node name="CenterPanel" type="VSplitContainer" parent="UI_Container"]
 layout_mode = 2

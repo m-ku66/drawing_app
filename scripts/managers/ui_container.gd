@@ -14,6 +14,7 @@ const RESIZE_DURATION = 0.1
 @onready var right_panel = $RightPanel  # Should be StyledRightPanel
 @onready var main_canvas = $CenterPanel/MainCanvas
 @onready var navigator = $RightPanel/Navigator
+@onready var color_picker = $LeftPanel/ColorPicker
 
 # Tween for smooth animations
 var resize_tween: Tween
@@ -82,6 +83,20 @@ func setup_left_panel(screen_width: float):
 		
 		# Trigger redraw when tween completes
 		resize_tween.tween_callback(left_panel.queue_redraw).set_delay(RESIZE_DURATION)
+
+func setup_color_picker_sizing():
+	if color_picker:
+		# Force the popup to open immediately
+		color_picker.popup_request.emit()
+		
+		# Or try this alternative:
+		# color_picker.get_popup().popup()
+		
+		# Make the popup non-modal so it stays open
+		var popup = color_picker.get_popup()
+		if popup:
+			popup.popup_window = false
+			popup.set_as_minsize()
 
 func setup_center_panel(screen_size: Vector2):
 	var center_width = screen_size.x * CENTER_AREA_RATIO
